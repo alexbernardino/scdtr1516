@@ -9,5 +9,8 @@ int main()
    //in C would be printf(“Hello World\n”);
 }    
 
+//compile with: g++ hello.cpp -o hello
+//run with: ./hello
+
 
 
