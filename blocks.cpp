@@ -12,6 +12,10 @@ int main()
   float m2 = obj2.CalcMass();
   float M = m1+m2;
   cout << "Total Mass " << M << endl;
+  int n = Solid::TotalItems();
+  // or int n = obj1.TotalItems();
+  cout << "Total Solids: " << n << endl;
+
 }
 
 //compile with g++ -std=c++11 -o blocks blocks.cpp
