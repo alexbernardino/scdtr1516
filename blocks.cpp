@@ -14,3 +14,4 @@ int main()
   cout << "Total Mass " << M << endl;
 }
 
+//compile with g++ --std=c++11 -o blocks blocks.cpp
