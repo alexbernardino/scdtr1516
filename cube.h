@@ -10,6 +10,9 @@ public:
   { 
       std::cout << "Creating Cube\n"; 
   }	
+  ~Cube() {                        	// destructor definition (inline)
+      std::cout << "Destroying Cube\n";
+  }
   float CalcMass() 		//member function (inline)
   { 
       return _s*_s*_s*_d; 
