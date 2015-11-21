@@ -1,12 +1,14 @@
 #ifndef CUBE_H
 #define CUBE_H
+#include "solid.h"
 #include <iostream> 		//need std::cout
 
-class Cube{
-  float _s, _d;  		// private: side lenght and material density, resp.
+class Cube : public Solid{
+  float _s;  		// private: side lenght
 public: 
-  Cube (float s, float d) 	// constructor definition (inline)
-  : _s {s}, _d{d}                       	// initialization of member variables C++11 style
+  Cube (float s, float d)    // constructor definition (inline)
+  : _s {s},                  // member variable initialization
+    Solid {d}                // base class initialization
   { 
       std::cout << "Creating Cube\n"; 
   }	
