@@ -19,6 +19,7 @@ public:
   static int TotalItems()  {
       return obj_count; 
   }
+  virtual float CalcMass() = 0;
 };
 int Solid::obj_count = 0;  //Initialization of static member variable
 #endif // SOLID_H
