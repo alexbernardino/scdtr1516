@@ -13,14 +13,18 @@ public:
   : _r {r}, _h {h}, 	// member variable initialization
     Solid {d}           // base class initialization
   { 
-      std::cout << "Creating Cylinder\n"; 
+      std::cout << "Cylinder Constructor\n"; 
   }	
   ~Cylinder() {                        	// destructor definition (inline)
-      std::cout << "Destroying Cylinder\n";
+      std::cout << "Cylinder Destructor\n";
   }
-  float CalcMass() 		//member function (inline)
+  float CalcMass() const		//member function (inline)
   { 
       return PI*_r*_r*_h*_d; 
+  }
+  void Print(ostream& where)
+  {
+     where << "Cylinder with density " << _d << ", radius " << _r << " and height " << _h;
   }
 };
 #endif //CYLINDER_H

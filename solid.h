@@ -12,14 +12,21 @@ public:
       std::cout << "creating solid\n";
       ++obj_count;   //must use in all contructor overloads
   }
-  ~Solid()  {
+  virtual ~Solid()  {
      std::cout << "destroying solid\n";
      --obj_count;
   }
   static int TotalItems()  {
       return obj_count; 
   }
-  virtual float CalcMass() = 0;
+  virtual float CalcMass() const = 0;
+  virtual void Print(ostream &) = 0;
+  friend ostream& operator<< (ostream&, Solid &);
 };
+ostream& operator<< (ostream& os, Solid &s)
+{
+  s.Print(os);
+  return os;
+}
 int Solid::obj_count = 0;  //Initialization of static member variable
 #endif // SOLID_H

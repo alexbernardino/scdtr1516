@@ -4,7 +4,8 @@ using namespace std;
 #include "cylinder.h"
 
 //declaration and definition of global function
-float TotalMass(Solid *sptr[]) //receives an array of pointers to Solids
+float TotalMass(Solid const * const sptr[]) //receives an array of pointers to Solids
+//promise not to modify neither the pointers nor the solids
 {
    float mass {0.0};
    while( *sptr != nullptr )
@@ -12,9 +13,19 @@ float TotalMass(Solid *sptr[]) //receives an array of pointers to Solids
    return mass;
 }
 
+Cube func(Cube c)
+{
+   return Cube {c};
+}
+
+
 int main() 
 {
-  Solid *svect[10];
+  Solid const * svect[10];
+  Cube c1 {1.0,2.0};
+  Cylinder c2 {3.0,4.0,5.0};
+  cout << c1 << endl << c2 << endl;
+
   svect [0] = new Cube(1.25,1.0);
   svect [1] = new Cube(1.0,0.9);
   svect [2] = new Cylinder(1,1,0.9);
