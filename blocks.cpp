@@ -1,4 +1,6 @@
 #include <iostream> //need std::cout
+#include <memory>   //need std::unique_ptr
+#include <vector>   //need std::vector
 using namespace std;
 #include "cube.h"
 #include "cylinder.h"
@@ -13,32 +15,49 @@ float TotalMass(Solid const * const sptr[]) //receives an array of pointers to S
    return mass;
 }
 
+float TotalMass(vector<unique_ptr<Solid>> &v) 
+{
+   float mass {0.0};
+   //for(auto p = v.cbegin(); p != v.cend(); p++)
+   //   mass += (*p)->CalcMass();
+
+   for(auto &s : v)
+      mass += s->CalcMass();
+   return mass;
+}
+
 Cube func(Cube c)
 {
    return Cube {c};
 }
 
 
+void f1(shared_ptr<Solid> p) { 
+    //p is a local copy – increments ref count 
+    cout << *p << endl;
+}   //p destroyed – decrements ref count
+
+
+
 int main() 
 {
-  Solid const * svect[10];
-  Cube c1 {1.0,2.0};
-  Cylinder c2 {3.0,4.0,5.0};
-  cout << c1 << endl << c2 << endl;
+  vector<unique_ptr<Solid>> sv;
+  constexpr int max_elems {10};
+  sv.reserve(max_elems);
+  
+  using T = unique_ptr<Solid>; //type alias
 
-  svect [0] = new Cube(1.25,1.0);
-  svect [1] = new Cube(1.0,0.9);
-  svect [2] = new Cylinder(1,1,0.9);
-  svect [3] = new Cylinder(0.5,2,1.0);
-  svect [4] = new Cube(1.25,1.0);
-  svect [5] = new Cylinder(1,2,0.8);
-  svect [6] = new Cylinder(1,0.5,0.7);
-  svect [7] = new Cylinder(3,2,1.1);
-  svect [8] = svect[9] = nullptr;
-  float tot = TotalMass(svect);
+  sv.push_back( T {new Cube {1.25,1.0}} );
+  // same as sv[0] =  T new Cube{1.25,1.0};
+  sv.push_back( T {new Cube {1.0,0.9}} );
+  sv.push_back( T {new Cylinder {0.5,2.0,1.0}} );
+  sv.push_back( T {new Cube {1.25,1.0}} );
+  sv.push_back( T {new Cylinder {1.0,2.0,0.8}} );
+  sv.push_back( T {new Cylinder {1.0,0.5,0.7}} );
+  sv.push_back( T {new Cylinder {3.0,2.0,1.1}} );
+
+  float tot = TotalMass(sv);
   cout << "Total Mass: " << tot << endl;
-  for(int i=0; svect[i]!=nullptr; i++) 
-     delete svect[i]; 
-}
+} //sv goes out of scope, all objects released safely
 
 //compile with g++ -std=c++11 -o blocks blocks.cpp
